@@ -10,14 +10,13 @@ const docClient = DynamoDBDocumentClient.from(client);
 
 export const getPoints = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const path_param = event.queryStringParameters;
-    const transaction_id = get(path_param, "transaction_id", "");
-    console.log("USRV KUSHKI_POINTS: transaction_id", transaction_id)
+    const document_number = get(path_param, "documentNumber", "");
+    console.log("USRV KUSHKI_POINTS: documentNumber", document_number)
 
     const command = new GetCommand({
-        // TODO: Cambiar nombre de la tabla a la de account
-        TableName: "qa-usrv-kpoints-card-transactions",
+        TableName: "qa-usrv-kpoints-accounts",
         Key: {
-            transaction_id: transaction_id
+            documentNumber: document_number
         }
     });
 
@@ -29,9 +28,7 @@ export const getPoints = async (event: APIGatewayProxyEvent): Promise<APIGateway
     return {
         statusCode: 200,
         body: JSON.stringify(
-            {
-                response
-            }
+                get(response, "Item")
         ),
     };
 };
