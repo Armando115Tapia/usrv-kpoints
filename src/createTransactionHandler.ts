@@ -11,14 +11,15 @@ const docClient = DynamoDBDocumentClient.from(client);
 export const createTransaction = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
     const transactionBody = JSON.parse(defaultTo(get(event,"body"), "{}"))
+    const transactionItem = {
+        transaction_id: v4(),
+        ...transactionBody
+    }
     console.log("USRV KUSHKI_POINTS: transactionBody", transactionBody)
 
     const command = new PutCommand({
         TableName: "qa-usrv-kpoints-card-transactions",
-        Item: {
-            transaction_id: v4(),
-            ...transactionBody
-        },
+        Item: transactionItem,
     });
 
     const response = await docClient.send(command);
@@ -28,7 +29,7 @@ export const createTransaction = async (event: APIGatewayProxyEvent): Promise<AP
         statusCode: 200,
         body: JSON.stringify(
             {
-                response
+                transactionItem
             }
         ),
     };

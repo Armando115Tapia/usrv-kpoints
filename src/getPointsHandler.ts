@@ -29,9 +29,7 @@ export const getPoints = async (event: APIGatewayProxyEvent): Promise<APIGateway
     return {
         statusCode: 200,
         body: JSON.stringify(
-            {
-                response
-            }
+                get(response, "Item")
         ),
     };
 };
