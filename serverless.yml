@@ -7,12 +7,6 @@ provider:
   lambdaHashingVersion: 20201221
 
 functions:
-  hello:
-    handler: src/handlers.hello
-    events:
-      - httpApi:
-          path: /hello/create
-          method: get
   createTransaction:
     handler: src/createTransactionHandler.createTransaction
     events:
