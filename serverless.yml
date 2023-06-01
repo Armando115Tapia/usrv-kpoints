@@ -13,7 +13,30 @@ functions:
       - httpApi:
           path: /hello/create
           method: get
+  createTrasaction:
+    handler: src/createTransactionHandler.createTransaction
+    events:
+      - httpApi:
+          path: /transaction/create
+          method: post
+
 
 plugins:
   - serverless-plugin-typescript
+
+resources:
+  Resources:
+    processors:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: qa-usrv-kpoints-card-transactions
+        AttributeDefinitions:
+          - AttributeName: transaction_id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: transaction_id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
 
