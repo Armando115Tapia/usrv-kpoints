@@ -13,24 +13,35 @@ functions:
       - httpApi:
           path: /transaction/create
           method: post
+#  processKushkiPoints:
+#    handler: src/processKPointsHandler.processKPoints
+#    events:
+#      - stream:
+#          type: dynamodb
+#          batchSize: 1
+#          startingPosition: LATEST
+#          arn:
+#            Fn::GetAtt:
+#              - transactions
+#              - StreamArn
 
 
 plugins:
   - serverless-plugin-typescript
 
-resources:
-  Resources:
-    processors:
-      Type: "AWS::DynamoDB::Table"
-      Properties:
-        TableName: qa-usrv-kpoints-card-transactions
-        AttributeDefinitions:
-          - AttributeName: transaction_id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: transaction_id
-            KeyType: HASH
-        BillingMode: PAY_PER_REQUEST
-        StreamSpecification:
-          StreamViewType: NEW_AND_OLD_IMAGES
+#resources:
+#  Resources:
+#    transactions:
+#      Type: "AWS::DynamoDB::Table"
+#      Properties:
+#        TableName: qa-usrv-kpoints-card-transactions
+#        AttributeDefinitions:
+#          - AttributeName: transaction_id
+#            AttributeType: S
+#        KeySchema:
+#          - AttributeName: transaction_id
+#            KeyType: HASH
+#        BillingMode: PAY_PER_REQUEST
+#        StreamSpecification:
+#          StreamViewType: NEW_AND_OLD_IMAGES
 

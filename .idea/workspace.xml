@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bfd13132-2e4f-40cb-82b7-d361455d2647" name="Changes" comment="" />
+    <list default="true" id="bfd13132-2e4f-40cb-82b7-d361455d2647" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/processKPointsHandler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/serverless.yml" beforeDir="false" afterPath="$PROJECT_DIR$/serverless.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,9 +29,10 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/armandotapia/Documents/FProyectos/kushki/hackaton/usrv-kpoints",
+    "last_opened_file_path": "/Users/jquinonez/Documents/GitHub/usrv-kpoints",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external",
+    "prettierjs.PrettierConfiguration.Package": "/Users/jquinonez/Documents/GitHub/usrv-kpoints/node_modules/prettier",
+    "ts.external.directory.path": "/Users/jquinonez/Documents/GitHub/usrv-kpoints/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -38,6 +45,7 @@
       <option name="presentableId" value="Default" />
       <updated>1685630754968</updated>
       <workItem from="1685630756180" duration="5200000" />
+      <workItem from="1685639785080" duration="1907000" />
     </task>
     <servers />
   </component>
