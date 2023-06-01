@@ -985,6 +985,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/uuid@^9.0.1":
+  "integrity" "sha512-rFT3ak0/2trgvp4yYZo5iKFEPsET7vKydKF+VRCxlQ9bpheehyAJH89dAkaLEq/j/RZXJIqcgsmPJKUP1Z28HA=="
+  "resolved" "https://registry.npmjs.org/@types/uuid/-/uuid-9.0.1.tgz"
+  "version" "9.0.1"
+
 "2-thenable@^1.0.0":
   "integrity" "sha512-HqiDzaLDFCXkcCO/SwoyhRwqYtINFHF7t9BDRq4x90TOKNAJpiqUt9X5lQ08bwxYzc067HUywDjGySpebHcUpw=="
   "resolved" "https://registry.npmjs.org/2-thenable/-/2-thenable-1.0.0.tgz"
@@ -3681,6 +3686,11 @@
   "integrity" "sha512-jOXGuXZAWdsTH7eZLtyXMqUb9EcWMGZNbL9YcGBJl4MH4nrxHmZJhEHvyLFrkxo+28uLb/NYRcStH48fnD0Vzw=="
   "resolved" "https://registry.npmjs.org/uuid/-/uuid-8.0.0.tgz"
   "version" "8.0.0"
+
+"uuid@8.3.0":
+  "integrity" "sha512-fX6Z5o4m6XsXBdli9g7DtWgAx+osMsRRZFKma1mIUsLCz6vRvv+pz5VNbyu9UEDzpMWulZfvpgb/cmDXVulYFQ=="
+  "resolved" "https://registry.npmjs.org/uuid/-/uuid-8.3.0.tgz"
+  "version" "8.3.0"
 
 "validate-npm-package-name@^3.0.0":
   "integrity" "sha512-M6w37eVCMMouJ9V/sdPGnC5H4uDr73/+xdq0FBLO3TFFX1+7wiUY6Es328NN+y43tmY+doUdN9g9J21vqB7iLw=="

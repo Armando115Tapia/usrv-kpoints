@@ -24,6 +24,12 @@ functions:
       - httpApi:
           path: /transaction/create
           method: post
+  getPoints:
+    handler: src/getPointsHandler.getPoints
+    events:
+      - httpApi:
+          path: /points
+          method: get
 
 
 plugins:
