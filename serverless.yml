@@ -13,7 +13,7 @@ functions:
       - httpApi:
           path: /hello/create
           method: get
-  createTrasaction:
+  createTransaction:
     handler: src/createTransactionHandler.createTransaction
     events:
       - httpApi:
