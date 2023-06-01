@@ -1,4 +1,4 @@
-import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
+import {DynamoDBDocumentClient, GetCommand, PutCommand} from "@aws-sdk/lib-dynamodb";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 
 const client = new DynamoDBClient({});
@@ -15,5 +15,16 @@ export class MetadataManager {
 
     return await docClient.send(command);
   };
+
+  public getDynamoTableItem = async (tableName: string, key: object) =>{
+    const command = new GetCommand({
+      TableName: tableName,
+      Key: {
+        key
+      }
+    });
+
+    return  await docClient.send(command);
+  }
 }
 

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bfd13132-2e4f-40cb-82b7-d361455d2647" name="Changes" comment="" />
+    <list default="true" id="c98d94e4-a99b-42f3-b0b0-c1f06bb11dfd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/metadataManager.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/metadataManager.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/processKPointsHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/processKPointsHandler.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,7 +30,8 @@
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/Users/armandotapia/Documents/FProyectos/kushki/hackaton/usrv-kpoints/src",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external",
+    "prettierjs.PrettierConfiguration.Package": "/Users/jquinonez/Documents/GitHub/usrv-kpoints/node_modules/prettier",
+    "ts.external.directory.path": "/Users/jquinonez/Documents/GitHub/usrv-kpoints/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
