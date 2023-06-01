@@ -1,7 +1,7 @@
 import { APIGatewayProxyResult, DynamoDBStreamEvent } from "aws-lambda";
 import { AttributeValue, DynamoDBRecord } from "aws-lambda/trigger/dynamodb-stream";
 import { get, isNaN } from "lodash";
-import { MetadataManager} from './metadataManager'
+import { MetadataManager } from "./metadataManager";
 const AWS = require("aws-sdk");
 const metadataManager = new MetadataManager();
 export const processKPoints = async (event: DynamoDBStreamEvent): Promise<APIGatewayProxyResult> => {
@@ -12,12 +12,14 @@ export const processKPoints = async (event: DynamoDBStreamEvent): Promise<APIGat
   if (["INSERT"].includes(record.eventName || "") && record.dynamodb?.NewImage) {
     const newImage: { [key: string]: AttributeValue } = record.dynamodb?.NewImage;
     const newImageAsJson = AWS.DynamoDB.Converter.unmarshall(newImage);
-    const amount = get(newImageAsJson, "amount", {});
-    const subtotalIva = get(amount, "subtotalIva0", 0);
-    const kPoints = buildKPointsValues(subtotalIva);
-    const dataToSave = buildDataSoSave(newImageAsJson.contact_details, newImageAsJson.country, kPoints);
+    const subtotalIva = get(newImageAsJson, "amount.subtotalIva0", 0);
+    const kPointsEarned = buildKPointsValues(subtotalIva);
+    const kPointsFromTable = await getKPoints(newImageAsJson.contact_details.documentNumber);
+    const kPointsTable = get(kPointsFromTable, "Item.kPoints", 0);
+    console.log({ kPointsTable });
+    console.log("kPointsTable sumados", kPointsTable + kPointsEarned );
+    const dataToSave = buildDataSoSave(newImageAsJson.contact_details, newImageAsJson.country, kPointsTable + kPointsEarned );
     await metadataManager.putDynamoTable(dataToSave, `${process.env.KPOINTS_ACCOUNTS_TABLE}`);
-
   }
 
   return {
@@ -36,8 +38,11 @@ const buildKPointsValues = (amount: number): number => {
   return isNaN(calculate) ? 0 : Math.floor(calculate);
 };
 const buildDataSoSave = (contactDetails: IUserDetails, country: string, kPoints: number) => {
-
   return { ...contactDetails, country, kPoints, created: Date.now() };
+};
+
+const getKPoints = async (documentNumber: string) => {
+  await metadataManager.getDynamoTableItem(`${process.env.KPOINTS_ACCOUNTS_TABLE}`, { documentNumber });
 };
 
 export interface IUserDetails {
