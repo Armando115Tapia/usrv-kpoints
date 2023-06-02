@@ -44,6 +44,12 @@ functions:
               - transactions
               - StreamArn
           maximumRetryAttempts: 0
+  discountPoints:
+    handler: src/discountPointsHandler.discountPoints
+    events:
+      - httpApi:
+          path: /discount/points
+          method: post
 
 
 plugins:

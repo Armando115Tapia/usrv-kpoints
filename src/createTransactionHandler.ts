@@ -10,7 +10,7 @@ const docClient = DynamoDBDocumentClient.from(client);
 
 export const createTransaction = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
-    const transactionBody = JSON.parse(defaultTo(get(event,"body"), "{}"))
+    const transactionBody = JSON.parse(defaultTo(get(event,"body"), "{}"));
     const transactionItem = {
         transaction_id: v4(),
         ...transactionBody
