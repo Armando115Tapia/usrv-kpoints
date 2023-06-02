@@ -42,7 +42,7 @@ const buildKPointsValues = (amount: number): number => {
 };
 
 const buildDataSoSave = (contactDetails: IUserDetails, country: string, kPoints: number) => {
-  return { ...contactDetails, country, kPoints, created: Date.now() };
+  return { ...contactDetails, country, kPoints, created: Date.now(), updated: Date.now() };
 };
 
 const isPossibleAddPoints = (record: DynamoDBRecord, newImage: object): boolean => {
