@@ -5,6 +5,8 @@ provider:
   name: aws
   runtime: nodejs18.x
   lambdaHashingVersion: 20201221
+  environment:
+    KPOINTS_ACCOUNTS_TABLE: ${self:resources.Resources.accounts.Properties.TableName}
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -24,6 +26,30 @@ functions:
       - httpApi:
           path: /transaction/create
           method: post
+  getPoints:
+    handler: src/getPointsHandler.getPoints
+    events:
+      - httpApi:
+          path: /points
+          method: get
+  processKushkiPoints:
+    handler: src/processKPointsHandler.processKPoints
+    events:
+      - stream:
+          type: dynamodb
+          batchSize: 1
+          startingPosition: LATEST
+          arn:
+            Fn::GetAtt:
+              - transactions
+              - StreamArn
+          maximumRetryAttempts: 0
+  discountPoints:
+    handler: src/discountPointsHandler.discountPoints
+    events:
+      - httpApi:
+          path: /discount/points
+          method: post
 
 
 plugins:
@@ -40,6 +66,19 @@ resources:
             AttributeType: S
         KeySchema:
           - AttributeName: transaction_id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+    accounts:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        TableName: qa-usrv-kpoints-accounts
+        AttributeDefinitions:
+          - AttributeName: documentNumber
+            AttributeType: S
+        KeySchema:
+          - AttributeName: documentNumber
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
         StreamSpecification:
