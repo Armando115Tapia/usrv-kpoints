@@ -8,17 +8,20 @@ export const processKPoints = async (event: DynamoDBStreamEvent): Promise<APIGat
   console.log("processKPoints, was called");
 
   const record: DynamoDBRecord = event.Records[0];
-
-  if (["INSERT"].includes(record.eventName || "") && record.dynamodb?.NewImage) {
-    const newImage: { [key: string]: AttributeValue } = record.dynamodb?.NewImage;
-    const newImageAsJson = AWS.DynamoDB.Converter.unmarshall(newImage);
-    const subtotalIva = get(newImageAsJson, "amount.subtotalIva0", 0);
+  const newImage: { [key: string]: AttributeValue } | undefined = record.dynamodb?.NewImage;
+  const newImageAsObject = AWS.DynamoDB.Converter.unmarshall(newImage);
+  if (isPossibleAddPoints(record, newImageAsObject)) {
+    const subtotalIva = get(newImageAsObject, "amount.subtotalIva0", 0);
     const kPointsEarned = buildKPointsValues(subtotalIva);
-    const kPointsFromTable = await getKPoints(newImageAsJson.contact_details.documentNumber);
-    const kPointsTable = get(kPointsFromTable, "Item.kPoints", 0);
-    console.log({ kPointsTable });
-    console.log("kPointsTable sumados", kPointsTable + kPointsEarned );
-    const dataToSave = buildDataSoSave(newImageAsJson.contact_details, newImageAsJson.country, kPointsTable + kPointsEarned );
+    const kPointsInformation = await metadataManager.getDynamoTableItem(`${process.env.KPOINTS_ACCOUNTS_TABLE}`, {
+      documentNumber: newImageAsObject.contact_details.documentNumber,
+    });
+    const kPointsFromTable = get(kPointsInformation, "Item.kPoints", 0);
+    const dataToSave = buildDataSoSave(
+      newImageAsObject.contact_details,
+      newImageAsObject.country,
+      kPointsFromTable + kPointsEarned,
+    );
     await metadataManager.putDynamoTable(dataToSave, `${process.env.KPOINTS_ACCOUNTS_TABLE}`);
   }
 
@@ -37,12 +40,19 @@ const buildKPointsValues = (amount: number): number => {
 
   return isNaN(calculate) ? 0 : Math.floor(calculate);
 };
+
 const buildDataSoSave = (contactDetails: IUserDetails, country: string, kPoints: number) => {
   return { ...contactDetails, country, kPoints, created: Date.now() };
 };
 
-const getKPoints = async (documentNumber: string) => {
-  await metadataManager.getDynamoTableItem(`${process.env.KPOINTS_ACCOUNTS_TABLE}`, { documentNumber });
+const isPossibleAddPoints = (record: DynamoDBRecord, newImage: object): boolean => {
+  const transactionStatus = get(newImage, "transaction_status");
+  const transactionType = get(newImage, "transaction_type");
+  console.log({transactionStatus, transactionType})
+  return ["INSERT"].includes(record.eventName || "") &&
+      ["SALE", "DEFFERED"].includes(transactionType || "") &&
+      transactionStatus === "APPROVAL";
+
 };
 
 export interface IUserDetails {
